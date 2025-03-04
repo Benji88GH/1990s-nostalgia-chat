@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk freely, who knows who you may find!</title>
+    <style>
+        body {
+            background-color: #ff00ff;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            text-align: center;
+            animation: colorShift 3s infinite alternate;
+        }
+
+        @keyframes colorShift {
+            0% { background-color: #ff00ff; }
+            50% { background-color: #00ffff; }
+            100% { background-color: #ffff00; }
+        }
+
+        .chat-container {
+            width: 80%;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border: 5px dashed #0000ff;
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            background-color: #fff;
+            padding: 10px;
+            border: 3px solid #ff4500;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 2px solid #0000ff;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #ff4500;
+            color: white;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            cursor: pointer;
+        }
+
+        .retro-gif {
+            width: 100px;
+            height: auto;
+            position: absolute;
+        }
+
+        .header-gif-left {
+            position: absolute;
+            top: 5px;
+            left: 15%;
+            width: 80px;
+            height: auto;
+        }
+
+        .header-gif-right {
+            position: absolute;
+            top: 5px;
+            right: 15%;
+            width: 80px;
+            height: auto;
+        }
+
+        @keyframes fadeText {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .title-text {
+            font-size: 2em;
+            font-weight: bold;
+            animation: fadeText 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://i0.wp.com/media2.giphy.com/media/bstmwF0ZCOvMQ/giphy.gif" class="header-gif-left">
+    <h1 class="title-text" id="title">Talk! Talk! Talk!</h1>
+    <img src="https://i0.wp.com/media2.giphy.com/media/bstmwF0ZCOvMQ/giphy.gif" class="header-gif-right">
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <script>
+        const titleTexts = ["Talk! Talk! Talk!", "What's on your mind?", "Who are you?", "Meet new friends!"];
+        let titleIndex = 0;
+
+        function changeTitle() {
+            document.getElementById('title').textContent = titleTexts[titleIndex];
+            titleIndex = (titleIndex + 1) % titleTexts.length;
+        }
+        setInterval(changeTitle, 3000);
+
+        function sendMessage() {
+            let chatBox = document.getElementById('chat-box');
+            let input = document.getElementById('chat-input');
+            let message = input.value.trim();
+            if (message) {
+                let messageElement = document.createElement('p');
+                messageElement.innerHTML = `<strong>You:</strong> ${message}`;
+                chatBox.appendChild(messageElement);
+                input.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+                setTimeout(botChat, 2000);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        const botNames = ["Furry Fox", "Masked Panther", "Neon Tiger", "Cyber Owl", "Electric Dolphin", "Glitched Rabbit"];
+        const botTopics = [
+            "Did you know that pizza was first made in Naples? What's your favorite topping?",
+            "Ever wanted to visit Tokyo? The neon lights there are insane!",
+            "I just tried making homemade pasta! What’s the best meal you've cooked?",
+            "Arcade games or console classics? Which one is your go-to?",
+            "Have you ever seen the Northern Lights? It’s on my bucket list!",
+            "Imagine living in a treehouse! Would you try it?"
+        ];
+
+        function botChat() {
+            let chatBox = document.getElementById('chat-box');
+            let botName = botNames[Math.floor(Math.random() * botNames.length)];
+            let botMessage = botTopics[Math.floor(Math.random() * botTopics.length)];
+            let messageElement = document.createElement('p');
+            messageElement.innerHTML = `<strong>${botName}:</strong> ${botMessage}`;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        setInterval(botChat, 5000);
+    </script>
+</body>
+</html>
