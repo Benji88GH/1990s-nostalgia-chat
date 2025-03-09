@@ -1,160 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talk freely, who knows who you may find!</title>
-    <style>
-        body {
-            background-color: #ff00ff;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            text-align: center;
-            animation: colorShift 3s infinite alternate;
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>90s Nostalgia Chat Room - Custom Username</title>
+  
+  <style>
+    /**********************************************
+     *  Retro 90s Theme
+     **********************************************/
+    body {
+      background-color: #ff00ff; /* Vibrant, rotating color scheme */
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      animation: colorShift 3s infinite alternate; /* Optional color-shifting effect */
+    }
 
-        @keyframes colorShift {
-            0% { background-color: #ff00ff; }
-            50% { background-color: #00ffff; }
-            100% { background-color: #ffff00; }
-        }
+    @keyframes colorShift {
+      0%   { background-color: #ff00ff; }
+      50%  { background-color: #00ffff; }
+      100% { background-color: #ffff00; }
+    }
+    
+    h1, h2, h3, label {
+      margin: 0;
+      padding: 0;
+    }
 
-        .chat-container {
-            width: 80%;
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
-            border: 5px dashed #0000ff;
-        }
+    /**********************************************
+     *  Start Screen
+     **********************************************/
+    .start-screen {
+      width: 80%;
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border: 5px dashed #0000ff; /* Retro dashed border */
+    }
 
-        .chat-box {
-            height: 300px;
-            overflow-y: scroll;
-            background-color: #fff;
-            padding: 10px;
-            border: 3px solid #ff4500;
-        }
+    .start-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff4500;
+      color: white;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      cursor: pointer;
+    }
 
-        .chat-input-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
+    .username-input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      border: 2px solid #0000ff;
+    }
 
-        .chat-input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 2px solid #0000ff;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-        }
+    /**********************************************
+     *  Chat Container
+     **********************************************/
+    .chat-container {
+      display: none;  /* hidden until username is chosen */
+      width: 80%;
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 20px;
+      border: 5px dashed #0000ff; /* Retro dashed border */
+    }
 
-        .send-button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #ff4500;
-            color: white;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            cursor: pointer;
-        }
+    .persona-display {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
 
-        .retro-gif {
-            width: 100px;
-            height: auto;
-            position: absolute;
-        }
+    .chat-box {
+      height: 300px;
+      overflow-y: scroll;
+      background-color: #fff;
+      padding: 10px;
+      border: 3px solid #ff4500; /* Vibrant border for the chat box */
+    }
 
-        .header-gif-left {
-            position: absolute;
-            top: 5px;
-            left: 15%;
-            width: 80px;
-            height: auto;
-        }
+    .chat-input-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
-        .header-gif-right {
-            position: absolute;
-            top: 5px;
-            right: 15%;
-            width: 80px;
-            height: auto;
-        }
+    .chat-input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 2px solid #0000ff;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+    }
 
-        @keyframes fadeText {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+    .send-button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff4500;
+      color: white;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      cursor: pointer;
+    }
 
-        .title-text {
-            font-size: 2em;
-            font-weight: bold;
-            animation: fadeText 3s infinite;
-        }
-    </style>
+    /**********************************************
+     *  Headers
+     **********************************************/
+    h1 {
+      margin-top: 20px;
+      font-size: 2em;
+    }
+  </style>
 </head>
 <body>
-    <img src="https://i0.wp.com/media2.giphy.com/media/bstmwF0ZCOvMQ/giphy.gif" class="header-gif-left">
-    <h1 class="title-text" id="title">Talk! Talk! Talk!</h1>
-    <img src="https://i0.wp.com/media2.giphy.com/media/bstmwF0ZCOvMQ/giphy.gif" class="header-gif-right">
-    <div class="chat-container">
-        <div class="chat-box" id="chat-box"></div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
-            <button class="send-button" onclick="sendMessage()">Send</button>
-        </div>
-    </div>
+
+  <!-- Title -->
+  <h1>90s Nostalgia Chat Room</h1>
+
+  <!-- START SCREEN -->
+  <div class="start-screen" id="start-screen">
+    <h2>Enter Your 90s Username</h2>
+    <p>Create your own radical handle to chat like it's 1999!</p>
     
-    <script>
-        const titleTexts = ["Talk! Talk! Talk!", "What's on your mind?", "Who are you?", "Meet new friends!"];
-        let titleIndex = 0;
+    <!-- User types their own 90s-style username -->
+    <input
+      type="text"
+      id="username-input"
+      class="username-input"
+      placeholder="Example: GrungeMaster_90"
+    />
 
-        function changeTitle() {
-            document.getElementById('title').textContent = titleTexts[titleIndex];
-            titleIndex = (titleIndex + 1) % titleTexts.length;
+    <!-- Button to start chat -->
+    <button class="start-button" id="start-button">Start Chat</button>
+  </div>
+
+  <!-- CHAT CONTAINER (hidden by default) -->
+  <div class="chat-container" id="chat-container">
+    <!-- Displays the chosen persona up top -->
+    <div class="persona-display" id="persona-display"></div>
+
+    <!-- The area where chat messages will display -->
+    <div class="chat-box" id="chat-box"></div>
+
+    <!-- User input + Send button -->
+    <div class="chat-input-container">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Type a message...">
+      <button class="send-button" id="send-button">Send</button>
+    </div>
+  </div>
+
+  <script>
+    /**************************************************
+     * JavaScript for Custom Username + Local Chat
+     **************************************************/
+    document.addEventListener('DOMContentLoaded', function() {
+      const startScreen = document.getElementById('start-screen');
+      const startButton = document.getElementById('start-button');
+      const usernameInput = document.getElementById('username-input');
+      const chatContainer = document.getElementById('chat-container');
+      const personaDisplay = document.getElementById('persona-display');
+      const chatBox = document.getElementById('chat-box');
+      const chatInput = document.getElementById('chat-input');
+      const sendButton = document.getElementById('send-button');
+
+      // We'll store messages in an array (in-memory only)
+      let messages = [];
+
+      // The user’s chosen 90s persona (typed by the user)
+      let currentPersona = null;
+
+      // Step 1: Username Selection
+      startButton.addEventListener('click', function() {
+        const typedName = usernameInput.value.trim();
+        if (!typedName) {
+          alert('Please enter a 90s username first!');
+          return;
         }
-        setInterval(changeTitle, 3000);
+        currentPersona = typedName;
+        // Hide the start screen, show the chat container
+        startScreen.style.display = 'none';
+        chatContainer.style.display = 'block';
 
-        function sendMessage() {
-            let chatBox = document.getElementById('chat-box');
-            let input = document.getElementById('chat-input');
-            let message = input.value.trim();
-            if (message) {
-                let messageElement = document.createElement('p');
-                messageElement.innerHTML = `<strong>You:</strong> ${message}`;
-                chatBox.appendChild(messageElement);
-                input.value = '';
-                chatBox.scrollTop = chatBox.scrollHeight;
-                setTimeout(botChat, 2000);
-            }
+        // Display the chosen username at the top
+        personaDisplay.textContent = `You are now chatting as: ${currentPersona}`;
+      });
+
+      // Step 2: Render messages in the chat box
+      function renderMessages() {
+        chatBox.innerHTML = '';
+        messages.forEach(msg => {
+          const p = document.createElement('p');
+          p.textContent = msg;
+          chatBox.appendChild(p);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      // Step 3: Send a message
+      function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        // Add message to array
+        messages.push(`${currentPersona}: ${text}`);
+        chatInput.value = '';
+        renderMessages();
+      }
+
+      // Click button to send
+      sendButton.addEventListener('click', sendMessage);
+
+      // Press Enter to send
+      chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          sendMessage();
         }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        const botNames = ["Furry Fox", "Masked Panther", "Neon Tiger", "Cyber Owl", "Electric Dolphin", "Glitched Rabbit"];
-        const botTopics = [
-            "Did you know that pizza was first made in Naples? What's your favorite topping?",
-            "Ever wanted to visit Tokyo? The neon lights there are insane!",
-            "I just tried making homemade pasta! What’s the best meal you've cooked?",
-            "Arcade games or console classics? Which one is your go-to?",
-            "Have you ever seen the Northern Lights? It’s on my bucket list!",
-            "Imagine living in a treehouse! Would you try it?"
-        ];
-
-        function botChat() {
-            let chatBox = document.getElementById('chat-box');
-            let botName = botNames[Math.floor(Math.random() * botNames.length)];
-            let botMessage = botTopics[Math.floor(Math.random() * botTopics.length)];
-            let messageElement = document.createElement('p');
-            messageElement.innerHTML = `<strong>${botName}:</strong> ${botMessage}`;
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        setInterval(botChat, 5000);
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
